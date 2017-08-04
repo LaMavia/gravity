@@ -22,9 +22,10 @@ function Ball(index,x, y){
     this.mass = this.r / 100;
     this.vel = 0;
     this.slide = 0;
-    this.frX = 0.94;
+    this.frX = 0.85;
     this.frY = 0.8;
-    this.f = 5;
+    this.f = 7;
+    this.cF = 0.9998;
     this.id = index;
     this.show = () => {
         let el = document.createElement("span");
@@ -64,9 +65,9 @@ function Ball(index,x, y){
     this.updateColors = () =>{
         let elem = document.querySelector('span.ball').style;
         //Color
-        let r = num.random(255, 20);
-        let g = num.random(255, 0);
-        let b = num.random(255, 20);
+        let r = num.random(255, 70);
+        let g = num.random(250, 70);
+        let b = num.random(255, 70);
             elem.setProperty('--bg', `rgb(${r},${g},${b})`);
     }
     this.change = () => {
@@ -111,11 +112,16 @@ function Ball(index,x, y){
             this.x = 0;
             this.dx = -this.dx; 
             this.dx *= this.frX;
+            this.updateColors();
         }
         if(this.x >= W - this.r){
             this.x = W - this.r;
             this.dx = -this.dx; 
             this.dx *= this.frX;
+            this.updateColors();
+        }
+        if(this.y >= H - this.r){
+            this.dx *= this.cF;
         }
     }
     this.update = () => {
