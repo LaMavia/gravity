@@ -26,7 +26,7 @@ function Ball(index,x, y){
     this.f = 7;
     this.cF = 0.998;
     this.id = index;
-    this.show = () => {
+    this.show = (id) => {
         let el = document.createElement("span");
         document.body.appendChild(el);
         switch(index){
@@ -41,8 +41,9 @@ function Ball(index,x, y){
         el.setAttribute('class', 'ball');
         el.setAttribute('id', this.id);
         el.style.setProperty('--size', this.r);
+        this.updateColors();
     }
-    this.events = () => {
+    this.events = (id) => {
         console.log('Setting events');
         let keys = document.querySelector('div.keys').children;
         keys[1].addEventListener('click', this.boost, true);
@@ -59,6 +60,7 @@ function Ball(index,x, y){
             case 65, 37: e.preventDefault(), this.move(-1);break;
             case 68, 39: e.preventDefault(), this.move(1);break;
             case 32, 38: e.preventDefault(), this.boost();break;
+            case 81: e.preventDefault(), this.boom();break;
         }
     }
     this.updateColors = () =>{
@@ -70,7 +72,7 @@ function Ball(index,x, y){
             elem.setProperty('--bg', `rgb(${r},${g},${b})`);
     }
     this.change = () => {
-        //this.r = num.random(200,20);
+        this.r = num.random(200,20);
         this.updateColors();
     }
     this.move = (v) => {
@@ -83,6 +85,13 @@ function Ball(index,x, y){
             }else{
                 this.dy -= 45;
             }
+        }
+    }
+    this.boom = (e) => {
+        let str = 100;
+        for(i = 0; i < balls.length; i++){
+            balls[i].dx = num.random(str, -str);
+            balls[i].dy = num.random(str, -str);
         }
     }
     this.ver = (e) => {
@@ -123,7 +132,7 @@ function Ball(index,x, y){
             this.dx *= this.cF;
         }
     }
-    this.update = () => {
+    this.update = (id) => {
         this.ver();
         this.hor();
         //Dev shit
@@ -135,13 +144,14 @@ function Ball(index,x, y){
         document.querySelector(`#${this.id}`).style.setProperty('--size', this.r);
         requestAnimationFrame(this.update);
     }
+    return this;
 }
 (function setUp(){
-    for(i = 0; i < 3; i++){
+    for(i = 0; i < 7; i++){//Can create up to 7
         balls.push(new Ball(i));
-        balls[i].show();
-        balls[i].events();
-        balls[i].update();
+        balls[i].show(balls[i].id);
+        balls[i].events(balls[i].id);
+        balls[i].update(balls[i].id);
         console.log(balls[i].y);
     };
 })();

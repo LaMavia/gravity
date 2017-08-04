@@ -28,6 +28,7 @@ body {
 }
 
 .ball {
+  position: absolute;
   display: block;
   width: calc(var(--size) * 1px);
   height: calc(var(--size) * 1px);
