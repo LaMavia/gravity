@@ -23,6 +23,7 @@ body{
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    perspective: 100vw;
 }
 .ball{
     display: block;
@@ -65,7 +66,7 @@ body{
         display: block;
         width: 100%;
         height: auto;
-        margin: calc((10vh - 5vh) / 2) auto auto 0;
+        margin: calc((10vh - 5vh) / 2) auto 0 auto;
     }
 }
 .warning{
