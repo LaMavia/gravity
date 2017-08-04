@@ -22,7 +22,7 @@ function Ball(index,x, y){
     this.mass = this.r / 100;
     this.vel = 0;
     this.slide = 0;
-    this.frX = 0.9;
+    this.frX = 0.94;
     this.frY = 0.8;
     this.f = 5;
     this.id = index;
@@ -77,11 +77,13 @@ function Ball(index,x, y){
         this.dx += this.f * v;
     }
     this.boost = (e) => {
-        if(this.y <= H - this.r * 2 || this.y >= H - this.r){
-            this.dy -= 45;
+        if(this.y >= (H - this.r) / 1.5){//Checking if can jump
+            if(this.dy > 0){
+                this.dy *= -1 + 2;
+            }else{
+                this.dy -= 45;
+            }
         }
-        
-        
     }
     this.ver = (e) => {
         this.dy += Math.round(grav * this.mass);
@@ -119,6 +121,10 @@ function Ball(index,x, y){
     this.update = () => {
         this.ver();
         this.hor();
+        //Dev shit
+        /*if(this.y >= (H - this.r) / 1.5){
+            console.log('Can jump :D');
+        }*/
         document.querySelector(`#${this.id}`).style.setProperty('--x', this.x);
         document.querySelector(`#${this.id}`).style.setProperty('--y', this.y);
         document.querySelector(`#${this.id}`).style.setProperty('--size', this.r);
